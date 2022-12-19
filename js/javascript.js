@@ -1,3 +1,7 @@
+// nombre: Juan Camilo Gonzalez Berrio
+// correo: juan.berrio@correounivalle.edu.co
+// cod: 1735277-2711
+
 class Escena extends Phaser.Scene {
   constructor(){
     super('inicio');
@@ -18,7 +22,7 @@ class Escena extends Phaser.Scene {
 
     create() {
       //invocamos el fondo
-      this.add.sprite(480,320,'fondo');
+      this.fondo = this.add.tileSprite(480, 320, 4090, 640, 'fondo').setScrollFactor(0);
       //invocamos al pajaro
       this.player = this.physics.add.sprite(64, 100, 'pajaro');
       //aplicamos la animación de volar
@@ -48,6 +52,20 @@ class Escena extends Phaser.Scene {
       this.player.on('animationcomplete', this.animationComplete, this);
 
       this.nuevaColumna();
+
+      //detectar cuando el pajaro se sale de la pantalla
+      this.physics.world.on('worldbounds', (body) => {
+        this.scene.start('escenaFin');
+      });
+    
+      this.player.setCollideWorldBounds(true);
+      this.player.body.onWorldBounds = true;
+    }
+
+    update(time){
+
+      //velocidad de movimiento del fondo
+      this.fondo.tilePositionX = time*0.1;
     }
 
     //implementación de obstaculos
