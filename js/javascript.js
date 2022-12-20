@@ -16,6 +16,7 @@ class Escena extends Phaser.Scene {
       this.load.image('muro', '../imagenes/muroMedio.png');
       this.load.image('muroArriba', '../imagenes/muroArriba.png');
       this.load.image('muroAbajo', '../imagenes/muroAbajo.png');
+      //definimos la música del juego
       this.load.audio('soundtrack', '../music/soundtrack.mp3');
       
         
@@ -63,6 +64,8 @@ class Escena extends Phaser.Scene {
       //detectar cuando el pajaro se sale de la pantalla
       this.physics.world.on('worldbounds', (body) => {
         this.scene.start('escenaFin');
+        //detención de música
+        this.game.sound.stopAll();
       });
     
       this.player.setCollideWorldBounds(true);
@@ -105,6 +108,9 @@ class Escena extends Phaser.Scene {
     //aviso de colisión
     hitColumna() {
       this.scene.start('escenaFin');
+      //detención de música
+      this.game.sound.stopAll();
+      
     }
 
     //analizar animación y seguir volando
