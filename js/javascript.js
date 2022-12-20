@@ -16,6 +16,7 @@ class Escena extends Phaser.Scene {
       this.load.image('muro', '../imagenes/muroMedio.png');
       this.load.image('muroArriba', '../imagenes/muroArriba.png');
       this.load.image('muroAbajo', '../imagenes/muroAbajo.png');
+      this.load.audio('soundtrack', '../music/soundtrack.mp3');
       
         
     }
@@ -32,6 +33,12 @@ class Escena extends Phaser.Scene {
         frameRate: 10,
         repeat: -1,
       });
+
+      //implementación de música
+      const soundtrack = this.sound.add('soundtrack');
+      soundtrack.play({
+        volume: 1
+      })
       
       //animación de salto
       this.anims.create({
@@ -72,7 +79,7 @@ class Escena extends Phaser.Scene {
     nuevaColumna() {
       const columna = this.physics.add.group();
       const hueco = Math.floor(Math.random() * 5) + 1;
-      for (let i = 0; i < 8; i++) {
+      for (let i = 0; i < 9; i++) {
         if (i !== hueco && i !== hueco + 1 && i !== hueco - 1) {
 
           let cubo;
@@ -90,7 +97,7 @@ class Escena extends Phaser.Scene {
       columna.setVelocityX(-200);
       columna.checkWorldBounds = true;
       columna.outOfBoundsKill = true;
-      this.time.delayedCall(1000, this.nuevaColumna, [], this);
+      this.time.delayedCall(1300, this.nuevaColumna, [], this);
       //colisión con muros
       this.physics.add.overlap(this.player, columna, this.hitColumna, null, this);
     }
@@ -152,7 +159,7 @@ const config = {
 		arcade: {
 			debug: true,
 			gravity: {
-				y: 300,
+				y: 500,
 			},
 		},
 	},
